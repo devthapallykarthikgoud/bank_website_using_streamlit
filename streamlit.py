@@ -3,8 +3,9 @@ import random
 import smtplib
 from email.message import EmailMessage
 import sqlite3
+
 st.markdown(
-        """
+    """
     <style>
     .stApp{
     background-image:url("https://imgs.search.brave.com/EwTWXx7W4QwXThlal6eV-E0DqiQm-x1_b7Lq1IRniTw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jb250/ZW50LmpkbWFnaWNi/b3guY29tL3YyL2Nv/bXAvcHVuZS92Mi8w/MjBweHgyMC54eDIw/LjI1MDIwODEyMzA1/MS5jNXYyL2NhdGFs/b2d1ZS9pbm5vbWF0/aWNzLXJlc2VhcmNo/LWxhYnMta290aHJ1/ZC1wdW5lLWRhdGEt/c2NpZW5jZS10cmFp/bmluZy1pbnN0aXR1/dGVzLXFkOGEybTFu/ZmEuanBnP3c9Mzg0/MCZxPTc1");
@@ -14,7 +15,7 @@ st.markdown(
     </style>
     """,
     unsafe_allow_html=True 
-    )
+)
 
 conn = sqlite3.connect("bank_users.db")
 c = conn.cursor()
@@ -43,10 +44,8 @@ def send_otp(to_email):
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-
     from_email = 'indianh4cker123@gmail.com'
     password = 'abry sasx tuqp bodm'
-
     server.login(from_email, password)
 
     msg = EmailMessage()
@@ -57,7 +56,6 @@ def send_otp(to_email):
 
     server.send_message(msg)
     server.quit()
-
     st.success("OTP successfully sent!")
 
 def generate_account_number():
@@ -65,7 +63,6 @@ def generate_account_number():
 
 if st.session_state.page == "login":
     st.title("INNOMATICS BANK")
-    
     with st.form("Login"):
         account_number = st.text_input("Enter your account number")
         Pin = st.text_input("Enter your pin", type="password")
@@ -104,11 +101,9 @@ elif st.session_state.page == "register":
                               (account_number, name, email, password))
                     conn.commit()
                     st.success(f"Registration successful! Your account number is: {account_number}")
-                    st.button("Go Back to login"):
+                    if st.button("Go Back to Login"):
                         go_to_login()
                 except sqlite3.IntegrityError:
                     st.error("Email already registered!")
             else:
                 st.error("Incorrect OTP, try again.")
-
-
