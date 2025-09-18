@@ -8,13 +8,13 @@ st.markdown(
     """
     <style>
     .stApp{
-    background-image:url("https://imgs.search.brave.com/EwTWXx7W4QwXThlal6eV-E0DqiQm-x1_b7Lq1IRniTw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jb250/ZW50LmpkbWFnaWNi/b3guY29tL3YyL2Nv/bXAvcHVuZS92Mi8w/MjBweHgyMC54eDIw/LjI1MDIwODEyMzA1/MS5jNXYyL2NhdGFs/b2d1ZS9pbm5vbWF0/aWNzLXJlc2VhcmNo/LWxhYnMta290aHJ1/ZC1wdW5lLWRhdGEt/c2NpZW5jZS10cmFp/bmluZy1pbnN0aXR1/dGVzLXFkOGEybTFu/ZmEuanBnP3c9Mzg0/MCZxPTc1");
-    background-size:cover;
-    background-repeat:no-repeat;
+        background-image:url("https://imgs.search.brave.com/EwTWXx7W4QwXThlal6eV-E0DqiQm-x1_b7Lq1IRniTw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jb250/ZW50LmpkbWFnaWNi/b3guY29tL3YyL2Nv/bXAvcHVuZS92Mi8w/MjBweHgyMC54eDIw/LjI1MDIwODEyMzA1/MS5jNXYyL2NhdGFs/b2d1ZS9pbm5vbWF0/aWNzLXJlc2VhcmNo/LWxhYnMta290aHJ1/ZC1wdW5lLWRhdGEt/c2NpZW5jZS10cmFp/bmluZy1pbnN0aXR1/dGVzLXFkOGEybTFu/ZmEuanBnP3c9Mzg0/MCZxPTc1");
+        background-size:cover;
+        background-repeat:no-repeat;
     }
     </style>
     """,
-    unsafe_allow_html=True 
+    unsafe_allow_html=True
 )
 
 conn = sqlite3.connect("bank_users.db")
@@ -34,26 +34,25 @@ if "page" not in st.session_state:
 
 def go_to_login():
     st.session_state.page = "login"
+    st.experimental_rerun()
 
 def go_to_register():
     st.session_state.page = "register"
+    st.experimental_rerun()
 
 def send_otp(to_email):
     otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
     st.session_state.otp = otp
-
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
     from_email = 'indianh4cker123@gmail.com'
     password = 'abry sasx tuqp bodm'
     server.login(from_email, password)
-
     msg = EmailMessage()
     msg['Subject'] = "OTP Verification"
     msg['From'] = from_email
     msg['To'] = to_email
     msg.set_content(f'Your OTP is: {otp}')
-
     server.send_message(msg)
     server.quit()
     st.success("OTP successfully sent!")
@@ -74,7 +73,6 @@ if st.session_state.page == "login":
                 st.success(f"Welcome {user[1]}!")
             else:
                 st.error("Invalid account number or pin")
-
     st.write("New to bank? Please register")
     if st.button("Register"):
         go_to_register()
@@ -84,13 +82,11 @@ elif st.session_state.page == "register":
     name = st.text_input("Full Name")
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
-
     if st.button("Send OTP"):
         if email.endswith("@gmail.com"):
             send_otp(email)
         else:
             st.error("Please enter a valid Gmail address")
-
     if "otp" in st.session_state:
         verify_otp = st.text_input("Enter OTP sent to your email")
         if st.button("Verify OTP"):
@@ -101,7 +97,7 @@ elif st.session_state.page == "register":
                               (account_number, name, email, password))
                     conn.commit()
                     st.success(f"Registration successful! Your account number is: {account_number}")
-                    if st.button("Go Back to Login"):
+                    if st.button("Go Back to login"):
                         go_to_login()
                 except sqlite3.IntegrityError:
                     st.error("Email already registered!")
