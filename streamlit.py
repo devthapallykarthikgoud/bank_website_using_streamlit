@@ -97,10 +97,12 @@ elif st.session_state.page == "register":
                               (account_number, name, email, password))
                     conn.commit()
                     st.success(f"Registration successful! Your account number is: {account_number}")
-                    if st.button("Go Back to login"):
-                        go_to_login()
+                    
                 except sqlite3.IntegrityError:
                     st.error("Email already registered!")
+                if st.button("Go Back to login"):
+                        go_to_login()
             else:
                 st.error("Incorrect OTP, try again.")
+
 
