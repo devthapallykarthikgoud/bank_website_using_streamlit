@@ -9,6 +9,8 @@ st.markdown(
     background-image:url("https://imgs.search.brave.com/EwTWXx7W4QwXThlal6eV-E0DqiQm-x1_b7Lq1IRniTw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jb250/ZW50LmpkbWFnaWNi/b3guY29tL3YyL2Nv/bXAvcHVuZS92Mi8w/MjBweHgyMC54eDIw/LjI1MDIwODEyMzA1/MS5jNXYyL2NhdGFs/b2d1ZS9pbm5vbWF0/aWNzLXJlc2VhcmNo/LWxhYnMta290aHJ1/ZC1wdW5lLWRhdGEt/c2NpZW5jZS10cmFp/bmluZy1pbnN0aXR1/dGVzLXFkOGEybTFu/ZmEuanBnP3c9Mzg0/MCZxPTc1");
     background-size:cover;
     background-repeat:no-repeat;
+    background-position: center;  
+    min-height: 100vh; 
     }
     </style>
     """,
@@ -72,4 +74,5 @@ elif st.session_state.page == "register":
                 st.success("Registration Successful!")
             else:
                 st.error("Incorrect OTP, try again.")
+
 
