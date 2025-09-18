@@ -34,11 +34,11 @@ if "page" not in st.session_state:
 
 def go_to_login():
     st.session_state.page = "login"
-    st.experimental_rerun()
+    st.rerun()
 
 def go_to_register():
     st.session_state.page = "register"
-    st.experimental_rerun()
+    st.rerun()
 
 def send_otp(to_email):
     otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
@@ -103,3 +103,4 @@ elif st.session_state.page == "register":
                     st.error("Email already registered!")
             else:
                 st.error("Incorrect OTP, try again.")
+
